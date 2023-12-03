@@ -4,31 +4,31 @@
     <img alt="CalculatorXD_logo" src="./CalculatorXD_Readme.png"/>
 </p>
 
-## Opis
+## Description
 
-Krótki opis Twojego projektu: CalculatorXD to aplikacja wieloplatformowa stworzona z wykorzystaniem technologii Tauri z backendem w Rust i frontendem w Solid.js, przy użyciu Vite. Projekt zapewnia wszechstronne rozwiązania dla użytkowników desktopowych (Windows, MacOS, Linux), jak i mobilnych (Android, iOS). Jest to prosta aplikacja słóżąca jako baza do pracy nad bardziej rozbudowanymi aplikacjami z przykładowymi konfiguracjami potrzebnymi aby taki projekt prawidłowo się kompilował pod daną platformę. Jest to również projekt który służy jako moje aktualne podsumowanie umiejętności jako developer.
+CalculatorXD is a cross-platform application created using Tauri technology with a backend in Rust and a frontend in Solid.js, using Vite. The project provides comprehensive solutions for both desktop (Windows, MacOS, Linux) and mobile users (Android, iOS). It is a simple application serving as a base for working on more complex applications with example configurations needed for correct compilation on a given platform. It is also a project that serves as my current summary of skills as a developer.
 
-## Funkcje
+## Features
 
-- Lista głównych funkcji projektu.
-- Obsługa wielu platform: Windows, MacOS, Linux (deb, snap, flatpak), Android, iOS.
-- Wersja webowa dla łatwego dostępu i demonstracji.
-- Optymalizacja wydajności i bezpieczeństwa dzięki backendowi w Rust.
-- Test nowego podejścia w budownie frontendu z wykorzystaniem środowiska wykonawczego Bun
-- Generowanie wykresów prostych dwuwymiarowych funkcji
-- Zapisywanie wykresów jako obraz do pliku png
+- List of the main features of the project.
+- Multi-platform support: Windows, MacOS, Linux (deb, snap, flatpak), Android, iOS.
+- Web version for easy access and demonstration.
+- Performance and security optimization thanks to the backend in Rust.
+- Testing a new approach in building the frontend using the Bun runtime environment.
+- Generation of simple two-dimensional function graphs.
+- Saving graphs as an image to a png file.
 
-## Demo Webowe
+## Web Demo
 
-Link do wersji demonstracyjnej: [Demo Projektu](#)
+Link to the demo version: [Demo Projektu](#)
 
-## Instalacja
+## Installation
 
 ### Desktop
 
 #### Windows
 
-Instrukcje instalacji dla Windows.
+Installation instructions for MacOS.
 
 #### MacOS
 
@@ -38,41 +38,41 @@ Instrukcje instalacji dla MacOS.
 
 ##### Deb
 
-Instrukcje instalacji dla Deb.
+Installation instructions for Deb.
 
 ##### Snap
 
-Instrukcje instalacji dla Snap.
+Installation instructions for Snap.
 
 ##### Flatpak
 
-Instrukcje instalacji dla Flatpak.
+Installation instructions for Flatpak.
 
 ### Mobile
 
 #### Android
 
-Instrukcje instalacji dla Android.
+Installation instructions for Android.
 
 #### iOS
 
-Instrukcje instalacji dla iOS.
+Installation instructions for iOS.
 
-## Budowanie z Źródła
+## Building from Source
 
-Instrukcje krok po kroku dotyczące budowania aplikacji z kodu źródłowego.
+Step-by-step instructions for building the application from the source code.
 
-## Wkład
+## Contribution
 
-Informacje o tym, jak można przyczynić się do projektu. Można tu dodać zasady dotyczące zgłaszania błędów, tworzenia pull requestów itp.
+Information on how to contribute to the project. This can include rules on reporting bugs, creating pull requests, etc.
 
-## Licencja
+## License
 
 MIT
 
-## Kontakt
+## Contact
 
-Informacje kontaktowe dla pytań, wsparcia, lub współpracy.
+Contact information for questions, support, or collaboration.
 
 ---
 
