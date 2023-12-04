@@ -30,8 +30,13 @@
         "fullscreen": false,
         "resizable": true,
         "title": "calculatorxd",
-        "width": 800,
-        "height": 600
+        "width": 425,
+        "maxWidth": 700,
+        "minWidth": 225,
+        "height": 625,
+        "maxHeight": 950,
+        "minHeight": 400,
+        "transparent": true
       }
     ]
   },
