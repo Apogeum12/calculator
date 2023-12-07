@@ -5,17 +5,21 @@ import { displaySize } from "../helpers/interface/displaySize";
 export const ApplicationBackground = styled.div`
   width: 100vw;
   height: 100vh;
+  /*TODO: If mobile then none */
+  border-radius: 16px;
+
+  font-size: 18px;
+  font-weight: 400;
 
   display: flex;
   flex-direction: column;
-
   justify-content: center;
   align-items: center;
 
   /* --- Light Theme --- */
   background-image: linear-gradient(
     0deg,
-    rgba(198, 232, 255, 0.9) 40%,
+    rgba(198, 232, 255, 0.92) 40%,
     rgba(215, 238, 255, 0.98) 100%
   );
 `;
