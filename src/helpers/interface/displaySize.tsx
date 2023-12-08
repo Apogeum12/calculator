@@ -1,4 +1,4 @@
-export interface displaySize {
+export interface DisplaySize {
   sMobile: boolean;
   mobile: boolean;
   tablet: boolean;

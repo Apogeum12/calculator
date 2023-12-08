@@ -1,3 +1,4 @@
+import { Accessor, Setter } from "solid-js";
 import { styled } from "solid-styled-components";
 
 //? todo: move styles
@@ -105,79 +106,107 @@ const TestBtn = styled.button`
   cursor: pointer;
 `;
 
-export const Keyboard = () => {
+interface KeyboardProps {
+  handleDataPutOnDisplay: (val: string) => void;
+  dataPutOnDisplay: Accessor<string>;
+  setDataPutOnDisplay: Setter<string>;
+}
+export const Keyboard = (props: KeyboardProps) => {
+  const handleDataPutOnDisplay = props.handleDataPutOnDisplay;
+  const removeAll = () => {
+    props.setDataPutOnDisplay("");
+  };
+  const removeLastChar = () => {
+    const lenDisplayData = props.dataPutOnDisplay().length;
+    props.setDataPutOnDisplay(
+      props.dataPutOnDisplay().slice(0, lenDisplayData - 1)
+    );
+  };
+
+  //! Effect add data from keyboard with sound //
+  //! General function handle based on button with "3"
+
   return (
     <>
       <KeyboardContainer>
         <FirstPartKeyBoardContainer>
           <FirstMainKeyboard>
             <FirstMainKeyboardButtons class="smallBtnK">
-              <TestBtn>%</TestBtn>
+              <TestBtn onClick={() => handleDataPutOnDisplay("%")}>%</TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons class="smallBtnK">
-              <TestBtn>mod</TestBtn>
+              <TestBtn onClick={() => handleDataPutOnDisplay("mod")}>
+                mod
+              </TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons class="smallBtnK">
-              <TestBtn>sin</TestBtn>
+              <TestBtn onClick={() => handleDataPutOnDisplay("sin")}>
+                sin
+              </TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn>Ac</TestBtn>
+              <TestBtn onClick={() => removeAll()}>AC</TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn>Bac</TestBtn>
+              <TestBtn onClick={() => removeLastChar()}>Bac</TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn>/</TestBtn>
+              <TestBtn onClick={() => handleDataPutOnDisplay("/")}>/</TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn>7</TestBtn>
+              <TestBtn onClick={() => handleDataPutOnDisplay("7")}>7</TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn>8</TestBtn>
+              <TestBtn onClick={() => handleDataPutOnDisplay("8")}>8</TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn>9</TestBtn>
+              <TestBtn onClick={() => handleDataPutOnDisplay("9")}>9</TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn>4</TestBtn>
+              <TestBtn onClick={() => handleDataPutOnDisplay("4")}>4</TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn>5</TestBtn>
+              <TestBtn onClick={() => handleDataPutOnDisplay("5")}>5</TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn>6</TestBtn>
+              <TestBtn onClick={() => handleDataPutOnDisplay("6")}>6</TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn>1</TestBtn>
+              <TestBtn onClick={() => handleDataPutOnDisplay("1")}>1</TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn>2</TestBtn>
+              <TestBtn onClick={() => handleDataPutOnDisplay("2")}>2</TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn>3</TestBtn>
+              <TestBtn
+                value="3"
+                onClick={(e) => handleDataPutOnDisplay(e.currentTarget.value)}
+              >
+                3
+              </TestBtn>
             </FirstMainKeyboardButtons>
           </FirstMainKeyboard>
           <FirstBottomKeyboard>
             <FirstBottomKeyboardButtoms class="zeroBtnK">
-              <TestBtn>0</TestBtn>
+              <TestBtn onClick={() => handleDataPutOnDisplay("0")}>0</TestBtn>
             </FirstBottomKeyboardButtoms>
             <FirstBottomKeyboardButtoms>
-              <TestBtn>.</TestBtn>
+              <TestBtn onClick={() => handleDataPutOnDisplay(".")}>.</TestBtn>
             </FirstBottomKeyboardButtoms>
           </FirstBottomKeyboard>
         </FirstPartKeyBoardContainer>
         <SecondRightKeyBoardContainer>
           <SecondRightBottoms class="smallBtnK">
-            <TestBtn>tan</TestBtn>
+            <TestBtn onClick={() => handleDataPutOnDisplay("tan")}>tan</TestBtn>
           </SecondRightBottoms>
           <SecondRightBottoms>
-            <TestBtn>*</TestBtn>
+            <TestBtn onClick={() => handleDataPutOnDisplay("*")}>*</TestBtn>
           </SecondRightBottoms>
           <SecondRightBottoms>
-            <TestBtn>-</TestBtn>
+            <TestBtn onClick={() => handleDataPutOnDisplay("-")}>-</TestBtn>
           </SecondRightBottoms>
           <SecondRightBottoms class="bigBtnK">
-            <TestBtn>+</TestBtn>
+            <TestBtn onClick={() => handleDataPutOnDisplay("+")}>+</TestBtn>
           </SecondRightBottoms>
           <SecondRightBottoms class="bigBtnK">
             <TestBtn>=</TestBtn>

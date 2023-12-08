@@ -5,12 +5,12 @@ import { getTheme } from "./helpers/function/theme";
 import { Display } from "./application/display/Display";
 import { SecondDisplay } from "./application/secondDisplay/SecondDisplay";
 import { Keyboard } from "./application/keyboard/Keyboard";
-import { displaySize } from "./helpers/interface/displaySize";
+import { DisplaySize } from "./helpers/interface/displaySize";
 import { AppContainer, ApplicationBackground } from "./styles/App.styles";
 
 function App() {
   //? --- Get Display Size --- ?//
-  const [displaySize, setDisplaySize] = createSignal<displaySize>({
+  const [displaySize, setDisplaySize] = createSignal<DisplaySize>({
     sMobile: useMediaQuery("(max-width: 380px)")(),
     mobile: useMediaQuery("(min-width: 381px) and (max-width: 460px)")(),
     tablet: useMediaQuery("(min-width: 461px) and (max-width: 1025px)")(),
@@ -25,7 +25,7 @@ function App() {
   });
 
   createEffect(() => {
-    const size: displaySize = {
+    const size: DisplaySize = {
       sMobile: useMediaQuery("(max-width: 380px)")(),
       mobile: useMediaQuery("(min-width: 381px) and (max-width: 460px)")(),
       tablet: useMediaQuery("(min-width: 461px) and (max-width: 1025px)")(),
@@ -39,12 +39,26 @@ function App() {
     // console.log("All sizes: ", size);
   });
 
+  //? --- Put data on display --- //
+  const [dataPutOnDisplay, setDataPutOnDisplay] = createSignal<string>("");
+  const handleDataPutOnDisplay = (val: string) => {
+    const newData = `${dataPutOnDisplay()}${val}`;
+    setDataPutOnDisplay(newData);
+  };
+
   return (
     <ApplicationBackground>
       <AppContainer displaySize={displaySize()}>
         <Display />
-        <SecondDisplay />
-        <Keyboard />
+        <SecondDisplay
+          dataPutOnDisplay={dataPutOnDisplay}
+          setDataPutOnDisplay={setDataPutOnDisplay}
+        />
+        <Keyboard
+          handleDataPutOnDisplay={handleDataPutOnDisplay}
+          dataPutOnDisplay={dataPutOnDisplay}
+          setDataPutOnDisplay={setDataPutOnDisplay}
+        />
       </AppContainer>
     </ApplicationBackground>
   );

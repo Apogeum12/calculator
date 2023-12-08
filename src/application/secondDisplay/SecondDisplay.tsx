@@ -1,3 +1,4 @@
+import { Accessor, Setter, createEffect, createSignal } from "solid-js";
 import { styled } from "solid-styled-components";
 
 // --- Separately Component --- //
@@ -11,9 +12,6 @@ const SecondDisplayContainer = styled.div`
   align-items: center;
 `;
 
-const BacklightInputCont = styled.input`
-  /* TODO */
-`;
 const BacklightDisplayCont = styled.div`
   width: 92.25%;
   height: 80%;
@@ -25,10 +23,14 @@ const BacklightDisplayCont = styled.div`
   align-items: center;
   justify-content: flex-start;
 `;
-const DataDisplayCont = styled.div`
+const DataDisplayCont = styled.input`
   width: 100%;
   height: 100%;
   margin-left: 0.75rem;
+  border: none;
+  text-decoration: none;
+  background-color: rgba(139, 181, 253, 0);
+  outline-style: none;
 
   display: flex;
   justify-content: flex-start;
@@ -44,12 +46,26 @@ const DataDisplayCont = styled.div`
   filter: drop-shadow(6px 3px 10px rgba(54, 124, 255, 0.65)) invert(10%);
 `;
 
-export const SecondDisplay = () => {
+interface SecondDisplayProps {
+  dataPutOnDisplay: Accessor<string>;
+  setDataPutOnDisplay: Setter<string>;
+}
+export const SecondDisplay = (props: SecondDisplayProps) => {
+  const [displaData, setDisplaData] = createSignal<string>("");
+
+  createEffect(() => {
+    setDisplaData(props.dataPutOnDisplay());
+  });
+
   return (
     <>
       <SecondDisplayContainer>
         <BacklightDisplayCont>
-          <DataDisplayCont>PR23KLADO000SDFSDAFSDA</DataDisplayCont>
+          <DataDisplayCont
+            onChange={(e) => props.setDataPutOnDisplay(e.target.value)}
+            id="SecondDisplay-input-component"
+            value={displaData()}
+          />
         </BacklightDisplayCont>
       </SecondDisplayContainer>
     </>
