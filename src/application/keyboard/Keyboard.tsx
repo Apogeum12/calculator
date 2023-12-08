@@ -84,6 +84,8 @@ const SecondRightBottoms = styled.div`
     height: 25.75%;
   }
 `;
+
+//! TODO: remove issue with mobile click background //
 const TestBtn = styled.button`
   width: 70%;
   height: 80%;
