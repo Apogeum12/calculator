@@ -1,3 +1,4 @@
+import { event } from "@tauri-apps/api";
 import { Accessor, Setter, createEffect, createSignal } from "solid-js";
 import { styled } from "solid-styled-components";
 
@@ -49,22 +50,26 @@ const DataDisplayCont = styled.input`
 interface SecondDisplayProps {
   dataPutOnDisplay: Accessor<string>;
   setDataPutOnDisplay: Setter<string>;
+  setProcessingData: Setter<string>;
 }
 export const SecondDisplay = (props: SecondDisplayProps) => {
-  const [displaData, setDisplaData] = createSignal<string>("");
-
-  createEffect(() => {
-    setDisplaData(props.dataPutOnDisplay());
-  });
+  // -- Keyboard Listening --- //
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "Enter") {
+      props.setProcessingData(props.dataPutOnDisplay());
+      props.setDataPutOnDisplay("");
+    }
+  };
 
   return (
     <>
       <SecondDisplayContainer>
         <BacklightDisplayCont>
           <DataDisplayCont
-            onChange={(e) => props.setDataPutOnDisplay(e.target.value)}
+            onInput={(e) => props.setDataPutOnDisplay(e.target.value)}
             id="SecondDisplay-input-component"
-            value={displaData()}
+            value={props.dataPutOnDisplay()}
+            onKeyDown={handleKeyDown}
           />
         </BacklightDisplayCont>
       </SecondDisplayContainer>

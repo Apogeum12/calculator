@@ -1,8 +1,10 @@
 import { styled } from "solid-styled-components";
-import { displaySize } from "../helpers/interface/displaySize";
+import { DisplaySize } from "../helpers/interface/displaySize";
 
-//todo! - theme handle
-export const ApplicationBackground = styled.div`
+interface ApplicationBackgroundProps {
+  isDark: boolean;
+}
+export const ApplicationBackground = styled.div<ApplicationBackgroundProps>`
   width: 100vw;
   height: 100vh;
   /*TODO: If mobile then none */
@@ -17,15 +19,14 @@ export const ApplicationBackground = styled.div`
   align-items: center;
 
   /* --- Light Theme --- */
-  background-image: linear-gradient(
-    0deg,
-    rgba(198, 232, 255, 0.92) 40%,
-    rgba(215, 238, 255, 0.98) 100%
-  );
+  background-image: ${(props) =>
+    props.isDark
+      ? "linear-gradient(0deg,rgba(36, 72, 96, 0.9) 40%,rgba(0, 145, 255, 0.7) 95%)"
+      : "linear-gradient(0deg,rgba(198, 232, 255, 0.92) 40%,rgba(215, 238, 255, 0.98) 100%)"};
 `;
 
 interface AppContainerProps {
-  displaySize: displaySize;
+  displaySize: DisplaySize;
 }
 export const AppContainer = styled.div<AppContainerProps>`
   width: ${(props) =>

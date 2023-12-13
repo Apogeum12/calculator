@@ -1,4 +1,4 @@
-import { createEffect, createSignal, onMount } from "solid-js";
+import { createEffect, createSignal } from "solid-js";
 // import { invoke } from "@tauri-apps/api/primitives";
 import { useMediaQuery } from "@suid/material";
 import { getTheme } from "./helpers/function/theme";
@@ -9,7 +9,7 @@ import { DisplaySize } from "./helpers/interface/displaySize";
 import { AppContainer, ApplicationBackground } from "./styles/App.styles";
 
 function App() {
-  //? --- Get Display Size --- ?//
+  // --- Get Display Size --- //
   const [displaySize, setDisplaySize] = createSignal<DisplaySize>({
     sMobile: useMediaQuery("(max-width: 380px)")(),
     mobile: useMediaQuery("(min-width: 381px) and (max-width: 460px)")(),
@@ -17,12 +17,8 @@ function App() {
     laptop: useMediaQuery("(min-width: 1026px) and (max-width: 1700px)")(),
     desktop: useMediaQuery("(min-width: 1701px)")(),
   });
-  //? - Get Theme type
-  //? - Based on mediaType get themeMaterial and themeStyled
-  const [isDark, setIsDark] = createSignal<boolean>(true);
-  onMount(() => {
-    getTheme(setIsDark);
-  });
+  // --- Get Theme ---
+  const [isDark, setIsDark] = createSignal<boolean>(getTheme());
 
   createEffect(() => {
     const size: DisplaySize = {
@@ -33,10 +29,6 @@ function App() {
       desktop: useMediaQuery("(min-width: 1701px)")(),
     };
     setDisplaySize(size);
-    getTheme(setIsDark);
-
-    //todo!: remove below
-    // console.log("All sizes: ", size);
   });
 
   //? --- Put data on display --- //
@@ -46,18 +38,24 @@ function App() {
     setDataPutOnDisplay(newData);
   };
 
+  // Display handler //
+  const [processingData, setProcessingData] = createSignal<string>("");
+  // console.log("Is dark Mode? ", isDark());
+
   return (
-    <ApplicationBackground>
+    <ApplicationBackground isDark={isDark()}>
       <AppContainer displaySize={displaySize()}>
-        <Display />
+        <Display processingData={processingData} setIsDark={setIsDark} />
         <SecondDisplay
           dataPutOnDisplay={dataPutOnDisplay}
           setDataPutOnDisplay={setDataPutOnDisplay}
+          setProcessingData={setProcessingData}
         />
         <Keyboard
           handleDataPutOnDisplay={handleDataPutOnDisplay}
           dataPutOnDisplay={dataPutOnDisplay}
           setDataPutOnDisplay={setDataPutOnDisplay}
+          setProcessingData={setProcessingData}
         />
       </AppContainer>
     </ApplicationBackground>
