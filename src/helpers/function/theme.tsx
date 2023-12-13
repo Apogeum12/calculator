@@ -1,8 +1,9 @@
-import { Setter } from "solid-js";
+export function getTheme() {
+  const getThemeFromlocalStorage =
+    localStorage.getItem("isDarkMode") || undefined;
 
-export function getTheme(setIsDark: Setter<boolean>) {
-  const getThemeFromlocalStorage = localStorage.getItem("themeType") || "dark";
-  if (/dark/i.test(getThemeFromlocalStorage)) {
-    setIsDark(true);
-  } else setIsDark(false);
+  if (!getThemeFromlocalStorage) return false;
+  if (/true/i.test(getThemeFromlocalStorage)) {
+    return true;
+  } else return false;
 }

@@ -112,6 +112,7 @@ interface KeyboardProps {
   handleDataPutOnDisplay: (val: string) => void;
   dataPutOnDisplay: Accessor<string>;
   setDataPutOnDisplay: Setter<string>;
+  setProcessingData: Setter<string>;
 }
 export const Keyboard = (props: KeyboardProps) => {
   const handleDataPutOnDisplay = props.handleDataPutOnDisplay;
@@ -125,8 +126,20 @@ export const Keyboard = (props: KeyboardProps) => {
     );
   };
 
-  //! Effect add data from keyboard with sound //
+  //TODO? --->
+  // -- Button Enter Listening --- //
+  const handleEnter = () => {
+    props.setProcessingData(props.dataPutOnDisplay());
+    props.setDataPutOnDisplay("");
+  };
+
   //! General function handle based on button with "3"
+  const handleInputButton = () => {
+    //todo:
+    // send event mouse with value
+    // handleDataPutOnDisplay <--- Send touch button
+    // Add sound when click :)
+  };
 
   return (
     <>
@@ -211,7 +224,7 @@ export const Keyboard = (props: KeyboardProps) => {
             <TestBtn onClick={() => handleDataPutOnDisplay("+")}>+</TestBtn>
           </SecondRightBottoms>
           <SecondRightBottoms class="bigBtnK">
-            <TestBtn>=</TestBtn>
+            <TestBtn onClick={handleEnter}>=</TestBtn>
           </SecondRightBottoms>
         </SecondRightKeyBoardContainer>
       </KeyboardContainer>
