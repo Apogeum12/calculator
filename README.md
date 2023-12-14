@@ -1,4 +1,4 @@
-# CalculatorXD
+# Calculator
 
 <p align="center">
     <img alt="CalculatorXD_logo" src="./CalculatorXD_Readme.png"/>
