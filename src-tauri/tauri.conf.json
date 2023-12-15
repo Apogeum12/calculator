@@ -6,8 +6,8 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "calculatorXD",
-    "version": "0.0.0"
+    "productName": "calculator",
+    "version": "0.0.2"
   },
   "tauri": {
     "bundle": {
@@ -29,14 +29,15 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "calculatorxd",
+        "title": "calculator",
         "width": 360,
         "maxWidth": 700,
         "minWidth": 320,
         "height": 620,
         "maxHeight": 950,
         "minHeight": 590,
-        "transparent": true
+        "transparent": true,
+        "decorations": false
       }
     ]
   },

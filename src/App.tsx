@@ -1,5 +1,4 @@
 import { createEffect, createSignal } from "solid-js";
-// import { invoke } from "@tauri-apps/api/primitives";
 import { useMediaQuery } from "@suid/material";
 import { getTheme } from "./helpers/function/theme";
 import { Display } from "./application/display/Display";
@@ -17,9 +16,6 @@ function App() {
     laptop: useMediaQuery("(min-width: 1026px) and (max-width: 1700px)")(),
     desktop: useMediaQuery("(min-width: 1701px)")(),
   });
-  // --- Get Theme ---
-  const [isDark, setIsDark] = createSignal<boolean>(getTheme());
-
   createEffect(() => {
     const size: DisplaySize = {
       sMobile: useMediaQuery("(max-width: 380px)")(),
@@ -30,6 +26,10 @@ function App() {
     };
     setDisplaySize(size);
   });
+  // --- END: Get Display Size --- //
+
+  // --- Get Theme ---
+  const [isDark, setIsDark] = createSignal<boolean>(getTheme());
 
   //? --- Put data on display --- //
   const [dataPutOnDisplay, setDataPutOnDisplay] = createSignal<string>("");

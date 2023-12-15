@@ -7,7 +7,7 @@ interface ApplicationBackgroundProps {
 export const ApplicationBackground = styled.div<ApplicationBackgroundProps>`
   width: 100vw;
   height: 100vh;
-  /*TODO: If mobile then none */
+  /*TODO! If mobile then none */
   border-radius: 16px;
 
   font-size: 18px;
