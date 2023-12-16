@@ -1,9 +1,9 @@
 [package]
-name = "calculatorxd"
-version = "0.0.0"
+name = "calculator"
+version = "0.0.2"
 description = "A Tauri App"
-authors = ["you"]
-license = ""
+authors = ["Sebastian Luc"]
+license = "MIT"
 repository = ""
 edition = "2021"
 
