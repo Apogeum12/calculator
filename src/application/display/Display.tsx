@@ -1,17 +1,20 @@
-import { Accessor, Setter, createEffect } from "solid-js";
+import { Accessor, Setter, Show, createEffect } from "solid-js";
 import { getCurrent } from "@tauri-apps/api/window";
 import { styled } from "solid-styled-components";
 import { AiOutlineCloseCircle } from "solid-icons/ai";
 import { VsChromeMinimize } from "solid-icons/vs";
 
 // --- Separately Component --- //
-const DisplayContainer = styled.div`
+interface DisplayContainerProps {
+  desktop: boolean;
+}
+const DisplayContainer = styled.div<DisplayContainerProps>`
   width: 100%;
   height: 30%;
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: ${(props) => (props.desktop ? "center" : "flex-end;")};
   align-items: center;
 `;
 const DisplayControlerContainer = styled.div`
@@ -56,10 +59,12 @@ const ControlerCloseApp = styled.div`
   }
   cursor: pointer;
 `;
-const DisplayDataContainer = styled.div`
+interface DisplayDataProps {
+  desktop: boolean;
+}
+const DisplayDataContainer = styled.div<DisplayDataProps>`
   width: 92%;
-  /* TODO! If mobile height 100% */
-  height: 85%;
+  height: ${(props) => (props.desktop ? "85%" : "95%")};
   background-color: rgba(139, 181, 253, 0.1);
   filter: drop-shadow(1px 2px 1px rgba(4, 47, 125, 0.1)) invert(10%);
 `;
@@ -67,6 +72,7 @@ const DisplayDataContainer = styled.div`
 interface DisplayProps {
   processingData: Accessor<string>;
   setIsDark: Setter<boolean>;
+  desktop: boolean;
 }
 export const Display = (props: DisplayProps) => {
   createEffect(() => {
@@ -80,25 +86,27 @@ export const Display = (props: DisplayProps) => {
 
   return (
     <>
-      <DisplayContainer>
+      <DisplayContainer desktop={props.desktop}>
         {/* TODO! If mobile then none */}
-        <DisplayControlerContainer data-tauri-drag-region class="titlebar">
-          <DisplayControlerButtons>
-            <ControlerCloseApp
-              onClick={() => getCurrent().close()}
-              id="titlebar-close"
-            >
-              <AiOutlineCloseCircle id="AppClose" />
-            </ControlerCloseApp>
-            <ControlerCloseApp
-              onClick={() => getCurrent().minimize()}
-              id="titlebar-minimize"
-            >
-              <VsChromeMinimize id="AppMinimize" />
-            </ControlerCloseApp>
-          </DisplayControlerButtons>
-        </DisplayControlerContainer>
-        <DisplayDataContainer>
+        <Show when={props.desktop}>
+          <DisplayControlerContainer data-tauri-drag-region class="titlebar">
+            <DisplayControlerButtons>
+              <ControlerCloseApp
+                onClick={() => getCurrent().close()}
+                id="titlebar-close"
+              >
+                <AiOutlineCloseCircle id="AppClose" />
+              </ControlerCloseApp>
+              <ControlerCloseApp
+                onClick={() => getCurrent().minimize()}
+                id="titlebar-minimize"
+              >
+                <VsChromeMinimize id="AppMinimize" />
+              </ControlerCloseApp>
+            </DisplayControlerButtons>
+          </DisplayControlerContainer>
+        </Show>
+        <DisplayDataContainer desktop={props.desktop}>
           <div>{props.processingData()}</div>
         </DisplayDataContainer>
       </DisplayContainer>

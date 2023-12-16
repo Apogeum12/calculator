@@ -1,4 +1,4 @@
-import { createEffect, createSignal } from "solid-js";
+import { createEffect, createSignal, onMount } from "solid-js";
 import { useMediaQuery } from "@suid/material";
 import { getTheme } from "./helpers/function/theme";
 import { Display } from "./application/display/Display";
@@ -6,6 +6,7 @@ import { SecondDisplay } from "./application/secondDisplay/SecondDisplay";
 import { Keyboard } from "./application/keyboard/Keyboard";
 import { DisplaySize } from "./helpers/interface/displaySize";
 import { AppContainer, ApplicationBackground } from "./styles/App.styles";
+import { isDesktop } from "./helpers/function/systemInfo";
 
 function App() {
   // --- Get Display Size --- //
@@ -28,6 +29,12 @@ function App() {
   });
   // --- END: Get Display Size --- //
 
+  // --- Is Desktop? --- //
+  const [desktop, setDesktop] = createSignal<boolean>(false);
+  onMount(async () => {
+    setDesktop(await isDesktop());
+  });
+
   // --- Get Theme ---
   const [isDark, setIsDark] = createSignal<boolean>(getTheme());
 
@@ -43,9 +50,13 @@ function App() {
   // console.log("Is dark Mode? ", isDark());
 
   return (
-    <ApplicationBackground isDark={isDark()}>
+    <ApplicationBackground isDark={isDark()} desktop={desktop()}>
       <AppContainer displaySize={displaySize()}>
-        <Display processingData={processingData} setIsDark={setIsDark} />
+        <Display
+          processingData={processingData}
+          setIsDark={setIsDark}
+          desktop={desktop()}
+        />
         <SecondDisplay
           dataPutOnDisplay={dataPutOnDisplay}
           setDataPutOnDisplay={setDataPutOnDisplay}
