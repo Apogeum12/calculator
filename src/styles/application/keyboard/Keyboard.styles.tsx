@@ -94,9 +94,13 @@ export const TestBtn = styled.button`
   color: rgb(78, 124, 156);
   border: 2px solid rgba(123, 152, 174, 0.5);
   font-weight: 600;
-  font-size: x-large;
+  font-size: large;
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.085);
+    box-shadow: 1px 0px 4px 1px rgba(123, 152, 174, 0.4);
+    color: rgb(60, 101, 131);
+    background-color: rgba(142, 189, 225, 0.55);
+    z-index: 10;
   }
   cursor: pointer;
 `;

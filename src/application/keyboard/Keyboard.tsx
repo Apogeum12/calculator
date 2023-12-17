@@ -10,8 +10,8 @@ import {
   SecondRightKeyBoardContainer,
   TestBtn,
 } from "../../styles/application/keyboard/Keyboard.styles";
-
-//? display data from buttons on the Second screen
+import { BiRegularArrowBack } from "solid-icons/bi";
+import { TbMath } from "solid-icons/tb";
 
 interface KeyboardProps {
   handleDataPutOnDisplay: (val: string) => void;
@@ -46,8 +46,6 @@ export const Keyboard = (props: KeyboardProps) => {
       handleDataPutOnDisplay(target.value);
     }
     //todo:
-    // send event mouse with value
-    // handleDataPutOnDisplay <--- Send touch button
     // Add sound when click :)
   };
 
@@ -62,8 +60,8 @@ export const Keyboard = (props: KeyboardProps) => {
               </TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons class="smallBtnK">
-              <TestBtn value="mod" onClick={handleInputButton}>
-                mod
+              <TestBtn value="√" onClick={handleInputButton}>
+                <TbMath />
               </TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons class="smallBtnK">
@@ -72,10 +70,12 @@ export const Keyboard = (props: KeyboardProps) => {
               </TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn onClick={() => removeAll()}>AC</TestBtn>
+              <TestBtn onClick={() => removeAll()}>C</TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn onClick={() => removeLastChar()}>Bac</TestBtn>
+              <TestBtn onClick={() => removeLastChar()}>
+                <BiRegularArrowBack />
+              </TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
               <TestBtn value="/" onClick={handleInputButton}>

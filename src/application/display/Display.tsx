@@ -17,6 +17,8 @@ const DisplayContainer = styled.div<DisplayContainerProps>`
   justify-content: ${(props) => (props.desktop ? "center" : "flex-end;")};
   align-items: center;
 `;
+
+//? --- App TitleBar --- //
 const DisplayControlerContainer = styled.div`
   width: 100%;
   height: 15%;
@@ -29,20 +31,20 @@ const DisplayControlerContainer = styled.div`
 const DisplayControlerButtons = styled.div`
   width: 25%;
   height: 100%;
+  margin-left: 0.3rem;
 
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
 `;
-//! TODO
 const ControlerCloseApp = styled.div`
-  width: 45%; /* smobile 25%, mobile: 45%  */
+  width: 20px;
   height: 95%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: x-large;
+  font-size: large;
   /* Switch between dark mode*/
   color: #407ead;
 
@@ -51,23 +53,29 @@ const ControlerCloseApp = styled.div`
   }
   #AppClose:hover {
     color: snow;
-    font-size: xx-large;
+    font-size: larger;
   }
   #AppMinimize:hover {
     color: snow;
-    font-size: xx-large;
+    font-size: larger;
   }
   cursor: pointer;
 `;
+//? --- End: App TitleBar --- //
+
+// --- Data display --- //
 interface DisplayDataProps {
   desktop: boolean;
 }
 const DisplayDataContainer = styled.div<DisplayDataProps>`
   width: 92%;
+  border-radius: 8px;
   height: ${(props) => (props.desktop ? "85%" : "95%")};
   background-color: rgba(139, 181, 253, 0.1);
   filter: drop-shadow(1px 2px 1px rgba(4, 47, 125, 0.1)) invert(10%);
 `;
+//! TODO: place for a formula processing
+//! TODO: place for a data result
 
 interface DisplayProps {
   processingData: Accessor<string>;
@@ -87,7 +95,6 @@ export const Display = (props: DisplayProps) => {
   return (
     <>
       <DisplayContainer desktop={props.desktop}>
-        {/* TODO! If mobile then none */}
         <Show when={props.desktop}>
           <DisplayControlerContainer data-tauri-drag-region class="titlebar">
             <DisplayControlerButtons>

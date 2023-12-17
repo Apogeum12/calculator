@@ -14,21 +14,23 @@ opt-level = "s"
 panic = "abort"
 strip = "symbols"
 [build]
+# Default target-cpu: generic
 # For Native compilation add: "target-cpu=native"
-# For MacOs and Linux add: "link-arg=-fuse-ld=mold"
-rustflags = ["-C", "link-arg=-fuse-ld=mold"]
+# For Linux use mold linker: "link-arg=-fuse-ld=mold"
+# For Windows and (macOs?) use llvm linker: "link-arg=-fuse-ld=lld"
+rustflags = ["-C", "target-cpu=generic", "link-arg=-fuse-ld=mold"]
 
 [lib]
-name = "calculatorxd_lib"
+name = "calculator_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
-tauri-build = { version = "2.0.0-alpha", features = [] }
+tauri-build = { version = "2.0.0-alpha.12", features = [] }
 
 [dependencies]
-tauri = { version = "2.0.0-alpha", features = [] }
-tauri-plugin-window = "2.0.0-alpha"
-tauri-plugin-shell = "2.0.0-alpha"
+tauri = { version = "2.0.0-alpha.18", features = [] }
+tauri-plugin-window = "2.0.0-alpha.2"
+tauri-plugin-shell = "2.0.0-alpha.5"
 serde_json = "1.0"
 
 [features]
