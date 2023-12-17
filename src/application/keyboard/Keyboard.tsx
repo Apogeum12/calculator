@@ -1,112 +1,17 @@
 import { Accessor, Setter } from "solid-js";
-import { styled } from "solid-styled-components";
-
-//? todo: move styles
-//? Add comments todo
-//? todo: add event for all buttons
-//? display data from buttons on the Second screen
-
-// --- Separately Component --- //
-const KeyboardContainer = styled.div`
-  width: 100%;
-  height: 60%;
-
-  display: flex;
-  flex-direction: row;
-`;
-
-const FirstPartKeyBoardContainer = styled.div`
-  width: 75%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-const FirstMainKeyboard = styled.div`
-  width: 100%;
-  height: 83.33%;
-
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-`;
-const FirstMainKeyboardButtons = styled.div`
-  width: 33.33%;
-  height: 20%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &.smallBtnK {
-    height: 12%;
-  }
-`;
-const FirstBottomKeyboard = styled.div`
-  width: 100%;
-  height: 16.67%;
-
-  display: flex;
-  flex-direction: row;
-`;
-const FirstBottomKeyboardButtoms = styled.div`
-  height: 100%;
-  width: 33.33%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &.zeroBtnK {
-    width: 66.66%;
-  }
-`;
-
-const SecondRightKeyBoardContainer = styled.div`
-  width: 25%;
-  height: 100%;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-const SecondRightBottoms = styled.div`
-  width: 100%;
-  height: 16.8%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &.smallBtnK {
-    height: 10%;
-  }
-  &.bigBtnK {
-    height: 25.75%;
-  }
-`;
-
-//! TODO: remove issue with mobile click background //
-const TestBtn = styled.button`
-  width: 70%;
-  height: 80%;
-  border-radius: 12px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  /* TODO: Configure */
-  background-color: rgba(171, 208, 237, 0.55);
-  color: rgb(78, 124, 156);
-  border: 2px solid rgba(123, 152, 174, 0.5);
-  font-weight: 600;
-  font-size: x-large;
-  &:hover {
-    transform: scale(1.05);
-  }
-  cursor: pointer;
-`;
+import {
+  FirstBottomKeyboard,
+  FirstBottomKeyboardButtoms,
+  FirstMainKeyboard,
+  FirstMainKeyboardButtons,
+  FirstPartKeyBoardContainer,
+  KeyboardContainer,
+  SecondRightBottoms,
+  SecondRightKeyBoardContainer,
+  TestBtn,
+} from "../../styles/application/keyboard/Keyboard.styles";
+import { BiRegularArrowBack } from "solid-icons/bi";
+import { TbMath } from "solid-icons/tb";
 
 interface KeyboardProps {
   handleDataPutOnDisplay: (val: string) => void;
@@ -116,6 +21,8 @@ interface KeyboardProps {
 }
 export const Keyboard = (props: KeyboardProps) => {
   const handleDataPutOnDisplay = props.handleDataPutOnDisplay;
+
+  // --- Remove chars --- //
   const removeAll = () => {
     props.setDataPutOnDisplay("");
   };
@@ -125,19 +32,20 @@ export const Keyboard = (props: KeyboardProps) => {
       props.dataPutOnDisplay().slice(0, lenDisplayData - 1)
     );
   };
+  // --- End: Remove chars --- //
 
-  //TODO? --->
   // -- Button Enter Listening --- //
   const handleEnter = () => {
     props.setProcessingData(props.dataPutOnDisplay());
     props.setDataPutOnDisplay("");
   };
 
-  //! General function handle based on button with "3"
-  const handleInputButton = () => {
+  const handleInputButton = (e: MouseEvent) => {
+    const target = e?.currentTarget as HTMLButtonElement;
+    if (target && target.value) {
+      handleDataPutOnDisplay(target.value);
+    }
     //todo:
-    // send event mouse with value
-    // handleDataPutOnDisplay <--- Send touch button
     // Add sound when click :)
   };
 
@@ -147,81 +55,112 @@ export const Keyboard = (props: KeyboardProps) => {
         <FirstPartKeyBoardContainer>
           <FirstMainKeyboard>
             <FirstMainKeyboardButtons class="smallBtnK">
-              <TestBtn onClick={() => handleDataPutOnDisplay("%")}>%</TestBtn>
-            </FirstMainKeyboardButtons>
-            <FirstMainKeyboardButtons class="smallBtnK">
-              <TestBtn onClick={() => handleDataPutOnDisplay("mod")}>
-                mod
+              <TestBtn value="%" onClick={handleInputButton}>
+                %
               </TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons class="smallBtnK">
-              <TestBtn onClick={() => handleDataPutOnDisplay("sin")}>
+              <TestBtn value="√" onClick={handleInputButton}>
+                <TbMath />
+              </TestBtn>
+            </FirstMainKeyboardButtons>
+            <FirstMainKeyboardButtons class="smallBtnK">
+              <TestBtn value="sin" onClick={handleInputButton}>
                 sin
               </TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn onClick={() => removeAll()}>AC</TestBtn>
+              <TestBtn onClick={() => removeAll()}>C</TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn onClick={() => removeLastChar()}>Bac</TestBtn>
+              <TestBtn onClick={() => removeLastChar()}>
+                <BiRegularArrowBack />
+              </TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn onClick={() => handleDataPutOnDisplay("/")}>/</TestBtn>
+              <TestBtn value="/" onClick={handleInputButton}>
+                /
+              </TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn onClick={() => handleDataPutOnDisplay("7")}>7</TestBtn>
+              <TestBtn value="7" onClick={handleInputButton}>
+                7
+              </TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn onClick={() => handleDataPutOnDisplay("8")}>8</TestBtn>
+              <TestBtn value="8" onClick={handleInputButton}>
+                8
+              </TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn onClick={() => handleDataPutOnDisplay("9")}>9</TestBtn>
+              <TestBtn value="9" onClick={handleInputButton}>
+                9
+              </TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn onClick={() => handleDataPutOnDisplay("4")}>4</TestBtn>
+              <TestBtn value="4" onClick={handleInputButton}>
+                4
+              </TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn onClick={() => handleDataPutOnDisplay("5")}>5</TestBtn>
+              <TestBtn value="5" onClick={handleInputButton}>
+                5
+              </TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn onClick={() => handleDataPutOnDisplay("6")}>6</TestBtn>
+              <TestBtn value="6" onClick={handleInputButton}>
+                6
+              </TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn onClick={() => handleDataPutOnDisplay("1")}>1</TestBtn>
+              <TestBtn value="1" onClick={handleInputButton}>
+                1
+              </TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn onClick={() => handleDataPutOnDisplay("2")}>2</TestBtn>
+              <TestBtn value="2" onClick={handleInputButton}>
+                2
+              </TestBtn>
             </FirstMainKeyboardButtons>
             <FirstMainKeyboardButtons>
-              <TestBtn
-                value="3"
-                onClick={(e) => handleDataPutOnDisplay(e.currentTarget.value)}
-              >
+              <TestBtn value="3" onClick={handleInputButton}>
                 3
               </TestBtn>
             </FirstMainKeyboardButtons>
           </FirstMainKeyboard>
           <FirstBottomKeyboard>
             <FirstBottomKeyboardButtoms class="zeroBtnK">
-              <TestBtn onClick={() => handleDataPutOnDisplay("0")}>0</TestBtn>
+              <TestBtn value="0" onClick={handleInputButton}>
+                0
+              </TestBtn>
             </FirstBottomKeyboardButtoms>
             <FirstBottomKeyboardButtoms>
-              <TestBtn onClick={() => handleDataPutOnDisplay(".")}>.</TestBtn>
+              <TestBtn value="." onClick={handleInputButton}>
+                .
+              </TestBtn>
             </FirstBottomKeyboardButtoms>
           </FirstBottomKeyboard>
         </FirstPartKeyBoardContainer>
         <SecondRightKeyBoardContainer>
           <SecondRightBottoms class="smallBtnK">
-            <TestBtn onClick={() => handleDataPutOnDisplay("tan")}>tan</TestBtn>
+            <TestBtn value="tan" onClick={handleInputButton}>
+              tan
+            </TestBtn>
           </SecondRightBottoms>
           <SecondRightBottoms>
-            <TestBtn onClick={() => handleDataPutOnDisplay("*")}>*</TestBtn>
+            <TestBtn value="*" onClick={handleInputButton}>
+              *
+            </TestBtn>
           </SecondRightBottoms>
           <SecondRightBottoms>
-            <TestBtn onClick={() => handleDataPutOnDisplay("-")}>-</TestBtn>
+            <TestBtn value="-" onClick={handleInputButton}>
+              -
+            </TestBtn>
           </SecondRightBottoms>
           <SecondRightBottoms class="bigBtnK">
-            <TestBtn onClick={() => handleDataPutOnDisplay("+")}>+</TestBtn>
+            <TestBtn value="+" onClick={handleInputButton}>
+              +
+            </TestBtn>
           </SecondRightBottoms>
           <SecondRightBottoms class="bigBtnK">
             <TestBtn onClick={handleEnter}>=</TestBtn>

@@ -1,5 +1,4 @@
-import { createEffect, createSignal } from "solid-js";
-// import { invoke } from "@tauri-apps/api/primitives";
+import { createEffect, createSignal, onMount } from "solid-js";
 import { useMediaQuery } from "@suid/material";
 import { getTheme } from "./helpers/function/theme";
 import { Display } from "./application/display/Display";
@@ -7,6 +6,7 @@ import { SecondDisplay } from "./application/secondDisplay/SecondDisplay";
 import { Keyboard } from "./application/keyboard/Keyboard";
 import { DisplaySize } from "./helpers/interface/displaySize";
 import { AppContainer, ApplicationBackground } from "./styles/App.styles";
+import { isDesktop } from "./helpers/function/systemInfo";
 
 function App() {
   // --- Get Display Size --- //
@@ -17,9 +17,6 @@ function App() {
     laptop: useMediaQuery("(min-width: 1026px) and (max-width: 1700px)")(),
     desktop: useMediaQuery("(min-width: 1701px)")(),
   });
-  // --- Get Theme ---
-  const [isDark, setIsDark] = createSignal<boolean>(getTheme());
-
   createEffect(() => {
     const size: DisplaySize = {
       sMobile: useMediaQuery("(max-width: 380px)")(),
@@ -30,6 +27,16 @@ function App() {
     };
     setDisplaySize(size);
   });
+  // --- END: Get Display Size --- //
+
+  // --- Is Desktop? --- //
+  const [desktop, setDesktop] = createSignal<boolean>(false);
+  onMount(async () => {
+    setDesktop(await isDesktop());
+  });
+
+  // --- Get Theme ---
+  const [isDark, setIsDark] = createSignal<boolean>(getTheme());
 
   //? --- Put data on display --- //
   const [dataPutOnDisplay, setDataPutOnDisplay] = createSignal<string>("");
@@ -43,9 +50,13 @@ function App() {
   // console.log("Is dark Mode? ", isDark());
 
   return (
-    <ApplicationBackground isDark={isDark()}>
+    <ApplicationBackground isDark={isDark()} desktop={desktop()}>
       <AppContainer displaySize={displaySize()}>
-        <Display processingData={processingData} setIsDark={setIsDark} />
+        <Display
+          processingData={processingData}
+          setIsDark={setIsDark}
+          desktop={desktop()}
+        />
         <SecondDisplay
           dataPutOnDisplay={dataPutOnDisplay}
           setDataPutOnDisplay={setDataPutOnDisplay}
