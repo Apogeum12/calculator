@@ -2,5 +2,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    calculatorxd_lib::run()
+    calculator_lib::run()
 }

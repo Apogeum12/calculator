@@ -1,33 +1,75 @@
-import { createSignal, onMount } from "solid-js";
-import logo from "./assets/logo.svg";
-// import { invoke } from "@tauri-apps/api/primitives";
-// import "./App.css";
-import { styled } from "solid-styled-components";
-
-const Test = styled.div`
-  background-color: aliceblue;
-`;
+import { createEffect, createSignal, onMount } from "solid-js";
+import { useMediaQuery } from "@suid/material";
+import { getTheme } from "./helpers/function/theme";
+import { Display } from "./application/display/Display";
+import { SecondDisplay } from "./application/secondDisplay/SecondDisplay";
+import { Keyboard } from "./application/keyboard/Keyboard";
+import { DisplaySize } from "./helpers/interface/displaySize";
+import { AppContainer, ApplicationBackground } from "./styles/App.styles";
+import { isDesktop } from "./helpers/function/systemInfo";
 
 function App() {
-  //TODO!
-  //? - Get mediaSize
-  //? - Get Theme type
-  //? - Based on mediaType get themeMaterial and themeStyled
-  //? - Skeleton App components
-  const [isDark, setIsDark] = createSignal<boolean>(true);
-  onMount(() => {
-    const getThemeFromlocalStorage =
-      localStorage.getItem("themeType") || "dark";
-    if (/dark/i.test(getThemeFromlocalStorage)) {
-      setIsDark(true);
-    } else setIsDark(false);
+  // --- Get Display Size --- //
+  const [displaySize, setDisplaySize] = createSignal<DisplaySize>({
+    sMobile: useMediaQuery("(max-width: 380px)")(),
+    mobile: useMediaQuery("(min-width: 381px) and (max-width: 460px)")(),
+    tablet: useMediaQuery("(min-width: 461px) and (max-width: 1025px)")(),
+    laptop: useMediaQuery("(min-width: 1026px) and (max-width: 1700px)")(),
+    desktop: useMediaQuery("(min-width: 1701px)")(),
+  });
+  createEffect(() => {
+    const size: DisplaySize = {
+      sMobile: useMediaQuery("(max-width: 380px)")(),
+      mobile: useMediaQuery("(min-width: 381px) and (max-width: 460px)")(),
+      tablet: useMediaQuery("(min-width: 461px) and (max-width: 1025px)")(),
+      laptop: useMediaQuery("(min-width: 1026px) and (max-width: 1700px)")(),
+      desktop: useMediaQuery("(min-width: 1701px)")(),
+    };
+    setDisplaySize(size);
+  });
+  // --- END: Get Display Size --- //
+
+  // --- Is Desktop? --- //
+  const [desktop, setDesktop] = createSignal<boolean>(false);
+  onMount(async () => {
+    setDesktop(await isDesktop());
   });
 
+  // --- Get Theme ---
+  const [isDark, setIsDark] = createSignal<boolean>(getTheme());
+
+  //? --- Put data on display --- //
+  const [dataPutOnDisplay, setDataPutOnDisplay] = createSignal<string>("");
+  const handleDataPutOnDisplay = (val: string) => {
+    const newData = `${dataPutOnDisplay()}${val}`;
+    setDataPutOnDisplay(newData);
+  };
+
+  // Display handler //
+  const [processingData, setProcessingData] = createSignal<string>("");
+  // console.log("Is dark Mode? ", isDark());
+
   return (
-    <div class="container">
-      <h1> Test</h1>
-    </div>
+    <ApplicationBackground isDark={isDark()} desktop={desktop()}>
+      <AppContainer displaySize={displaySize()}>
+        <Display
+          processingData={processingData}
+          setIsDark={setIsDark}
+          desktop={desktop()}
+        />
+        <SecondDisplay
+          dataPutOnDisplay={dataPutOnDisplay}
+          setDataPutOnDisplay={setDataPutOnDisplay}
+          setProcessingData={setProcessingData}
+        />
+        <Keyboard
+          handleDataPutOnDisplay={handleDataPutOnDisplay}
+          dataPutOnDisplay={dataPutOnDisplay}
+          setDataPutOnDisplay={setDataPutOnDisplay}
+          setProcessingData={setProcessingData}
+        />
+      </AppContainer>
+    </ApplicationBackground>
   );
 }
-
 export default App;
