@@ -1,4 +1,4 @@
-import { Accessor, Setter, Show, createEffect } from "solid-js";
+import { Accessor, Setter, Show, createEffect, createSignal } from "solid-js";
 import { getCurrent } from "@tauri-apps/api/window";
 import { styled } from "solid-styled-components";
 import { AiOutlineCloseCircle } from "solid-icons/ai";
@@ -74,21 +74,74 @@ const DisplayDataContainer = styled.div<DisplayDataProps>`
   background-color: rgba(139, 181, 253, 0.1);
   filter: drop-shadow(1px 2px 1px rgba(4, 47, 125, 0.1)) invert(10%);
 `;
-//! TODO: place for a formula processing
-//! TODO: place for a data result
+const DisplayFormulaCont = styled.div`
+  width: 100%;
+  height: 60%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+`;
+const DisplayFormula = styled.div`
+  width: 60%;
+  height: 100%;
+  padding-right: 0.5rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  justify-content: end;
+
+  overflow: clip;
+`;
+const DisplayResultCont = styled.div`
+  width: 100%;
+  height: 40%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+
+  /* Depends from display Size */
+  font-size: 2.75rem; /* 3.5rem; */
+  font-weight: 600;
+`;
+const DisplayResultChar = styled.div`
+  width: auto;
+  height: 100%;
+  font-variant: small-caps;
+`;
+const DisplayResult = styled.div`
+  width: fit-content;
+  height: 100%;
+  padding-right: 0.5rem;
+  padding-left: 0.25rem;
+`;
 
 interface DisplayProps {
   processingData: Accessor<string>;
+  setProcessingData: Setter<string>;
   setIsDark: Setter<boolean>;
   desktop: boolean;
 }
 export const Display = (props: DisplayProps) => {
+  const [resultData, setResultData] = createSignal<string>("");
+
   createEffect(() => {
     if (props.processingData().length > 0) {
-      const data = props.processingData();
-      //? Detect theme change
-      if (isThemeChange(data)) switchTheme(data, props.setIsDark);
-      //todo: Other rules
+      let data = props.processingData();
+      if (isThemeChange(data)) {
+        switchTheme(data, props.setIsDark);
+        setResultData("");
+        props.setProcessingData("");
+        return;
+      }
+      //! TODO: detect letter then return error;
+      //? change all ',' to '.'
+      setResultData(switchToDots(data));
+      //! TODO! Compute formula
     }
   });
 
@@ -114,7 +167,17 @@ export const Display = (props: DisplayProps) => {
           </DisplayControlerContainer>
         </Show>
         <DisplayDataContainer desktop={props.desktop}>
-          <div>{props.processingData()}</div>
+          <DisplayFormulaCont>
+            <DisplayFormula>
+              <h4>{props.processingData()}</h4>
+            </DisplayFormula>
+          </DisplayFormulaCont>
+          <DisplayResultCont>
+            <Show when={!/ /i.test(resultData()) && resultData() !== ""}>
+              <DisplayResultChar>=</DisplayResultChar>
+              <DisplayResult>{resultData()}</DisplayResult>
+            </Show>
+          </DisplayResultCont>
         </DisplayDataContainer>
       </DisplayContainer>
     </>
@@ -133,4 +196,7 @@ const switchTheme = (val: string, isDarkMode: Setter<boolean>) => {
     localStorage.setItem("isDarkMode", "false");
     isDarkMode(false);
   }
+};
+const switchToDots = (val: string) => {
+  return val.replace(/,/gm, ".");
 };

@@ -54,6 +54,7 @@ function App() {
       <AppContainer displaySize={displaySize()}>
         <Display
           processingData={processingData}
+          setProcessingData={setProcessingData}
           setIsDark={setIsDark}
           desktop={desktop()}
         />
@@ -62,6 +63,7 @@ function App() {
           setDataPutOnDisplay={setDataPutOnDisplay}
           setProcessingData={setProcessingData}
         />
+        {/* TODO! - Clear display when is click 'C' */}
         <Keyboard
           handleDataPutOnDisplay={handleDataPutOnDisplay}
           dataPutOnDisplay={dataPutOnDisplay}
