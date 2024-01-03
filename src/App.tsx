@@ -8,6 +8,12 @@ import { DisplaySize } from "./helpers/interface/displaySize";
 import { AppContainer, ApplicationBackground } from "./styles/App.styles";
 import { isDesktop } from "./helpers/function/systemInfo";
 
+//TODO!
+// 1) Clear code
+// 2) Run in android
+// 3) Prepare list things todo, translate or correction need
+// 4) Prepare new version and merge code
+
 function App() {
   // --- Get Display Size --- //
   const [displaySize, setDisplaySize] = createSignal<DisplaySize>({
@@ -47,7 +53,6 @@ function App() {
 
   // Display handler //
   const [processingData, setProcessingData] = createSignal<string>("");
-  // console.log("Is dark Mode? ", isDark());
 
   return (
     <ApplicationBackground isDark={isDark()} desktop={desktop()}>
@@ -63,7 +68,6 @@ function App() {
           setDataPutOnDisplay={setDataPutOnDisplay}
           setProcessingData={setProcessingData}
         />
-        {/* TODO! - Clear display when is click 'C' */}
         <Keyboard
           handleDataPutOnDisplay={handleDataPutOnDisplay}
           dataPutOnDisplay={dataPutOnDisplay}

@@ -24,6 +24,7 @@ export const Keyboard = (props: KeyboardProps) => {
 
   // --- Remove chars --- //
   const removeAll = () => {
+    props.setProcessingData("");
     props.setDataPutOnDisplay("");
   };
   const removeLastChar = () => {
@@ -45,8 +46,7 @@ export const Keyboard = (props: KeyboardProps) => {
     if (target && target.value) {
       handleDataPutOnDisplay(target.value);
     }
-    //todo:
-    // Add sound when click :)
+    //todo! ---  Add sound when click :) ---
   };
 
   return (

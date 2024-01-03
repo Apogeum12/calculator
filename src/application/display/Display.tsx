@@ -3,6 +3,16 @@ import { getCurrent } from "@tauri-apps/api/window";
 import { styled } from "solid-styled-components";
 import { AiOutlineCloseCircle } from "solid-icons/ai";
 import { VsChromeMinimize } from "solid-icons/vs";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@suid/material";
+
+import { invoke } from "@tauri-apps/api/primitives";
 
 // --- Separately Component --- //
 interface DisplayContainerProps {
@@ -128,9 +138,11 @@ interface DisplayProps {
 }
 export const Display = (props: DisplayProps) => {
   const [resultData, setResultData] = createSignal<string>("");
+  const [formulaError, setFormulaError] = createSignal<boolean>(false);
 
-  createEffect(() => {
+  createEffect(async () => {
     if (props.processingData().length > 0) {
+      //! TODO try / catch
       let data = props.processingData();
       if (isThemeChange(data)) {
         switchTheme(data, props.setIsDark);
@@ -138,10 +150,30 @@ export const Display = (props: DisplayProps) => {
         props.setProcessingData("");
         return;
       }
-      //! TODO: detect letter then return error;
+      const isFormulaError = preProcessingFormula(data);
+      if (isFormulaError) {
+        setFormulaError(true);
+        props.setProcessingData("");
+        setResultData("");
+        return;
+      }
       //? change all ',' to '.'
-      setResultData(switchToDots(data));
-      //! TODO! Compute formula
+      data = switchToDots(data);
+
+      //? Parse function for Rust calculation
+      data = parseFunctionForRust(data);
+      let result: string | undefined = await invoke("processing_formula", {
+        formula: data,
+      });
+      if (!result) {
+        setFormulaError(true);
+        props.setProcessingData("");
+        setResultData("");
+        return;
+      }
+      setResultData(result);
+    } else {
+      setResultData("");
     }
   });
 
@@ -175,11 +207,24 @@ export const Display = (props: DisplayProps) => {
           <DisplayResultCont>
             <Show when={!/ /i.test(resultData()) && resultData() !== ""}>
               <DisplayResultChar>=</DisplayResultChar>
-              <DisplayResult>{resultData()}</DisplayResult>
+              <DisplayResult>{resultData().slice(0, 10)}</DisplayResult>
             </Show>
           </DisplayResultCont>
         </DisplayDataContainer>
       </DisplayContainer>
+      <Dialog open={formulaError()}>
+        <DialogTitle style={{ "text-align": "center" }}>
+          Formula Error
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Calculator isn't supported sended formula.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setFormulaError(false)}>Ok</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
@@ -199,4 +244,23 @@ const switchTheme = (val: string, isDarkMode: Setter<boolean>) => {
 };
 const switchToDots = (val: string) => {
   return val.replace(/,/gm, ".");
+};
+const preProcessingFormula = (val: string) => {
+  const cleanningRegex = new RegExp(
+    /%|√|sin\d+(\.\d+)?|tan\d+(\.\d+)?|\/|\*|[0-9]|-|\+|\.|\,/,
+    "gim"
+  );
+  return val.replace(cleanningRegex, "").length > 0;
+};
+
+const parseFunctionForRust = (val: string) => {
+  // --- Replace Sin and Tan
+  const add_multiply = new RegExp(/(\d+)(sin|tan|√)/, "g");
+  const new_val_ = val.replace(add_multiply, "$1*$2");
+
+  const regex_t = new RegExp(/(sin|tan)(\d+(\.\d+)?)/, "g");
+  const new_val = new_val_.replace(regex_t, "math::$1($2)");
+  // --- Replace Modulo
+  const regex_m = new RegExp(/(√)(\d+(\.\d+)?)/, "g");
+  return new_val.replace(regex_m, "math::sqrt($2)");
 };
