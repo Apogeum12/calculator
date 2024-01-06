@@ -8,6 +8,11 @@ import { DisplaySize } from "./helpers/interface/displaySize";
 import { AppContainer, ApplicationBackground } from "./styles/App.styles";
 import { isDesktop } from "./helpers/function/systemInfo";
 
+//TODO!
+// 1) Add sound and transition when click on button
+// 2) Styling Keyboard to beta version
+// 3) Styling displays to beta version
+
 function App() {
   // --- Get Display Size --- //
   const [displaySize, setDisplaySize] = createSignal<DisplaySize>({
@@ -27,16 +32,18 @@ function App() {
     };
     setDisplaySize(size);
   });
-  // --- END: Get Display Size --- //
+  // ------------------------ //
 
-  // --- Is Desktop? --- //
+  // --- Detect Desktop --- //
   const [desktop, setDesktop] = createSignal<boolean>(false);
   onMount(async () => {
     setDesktop(await isDesktop());
   });
+  // ------------------------ //
 
   // --- Get Theme ---
   const [isDark, setIsDark] = createSignal<boolean>(getTheme());
+  // ------------------------ //
 
   //? --- Put data on display --- //
   const [dataPutOnDisplay, setDataPutOnDisplay] = createSignal<string>("");
@@ -47,13 +54,13 @@ function App() {
 
   // Display handler //
   const [processingData, setProcessingData] = createSignal<string>("");
-  // console.log("Is dark Mode? ", isDark());
 
   return (
     <ApplicationBackground isDark={isDark()} desktop={desktop()}>
       <AppContainer displaySize={displaySize()}>
         <Display
           processingData={processingData}
+          setProcessingData={setProcessingData}
           setIsDark={setIsDark}
           desktop={desktop()}
         />

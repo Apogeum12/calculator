@@ -78,7 +78,6 @@ export const SecondRightBottoms = styled.div`
   }
 `;
 
-//! TODO: remove issue with mobile click background //
 export const TestBtn = styled.button`
   width: 70%;
   height: 80%;
@@ -89,17 +88,18 @@ export const TestBtn = styled.button`
   align-items: center;
   justify-content: center;
 
-  /* TODO: Configure */
   background-color: rgba(171, 208, 237, 0.55);
   color: rgb(78, 124, 156);
   border: 2px solid rgba(123, 152, 174, 0.5);
   font-weight: 600;
   font-size: large;
   &:hover {
-    transform: scale(1.085);
+    transition: 0.18s ease-in-out;
+    transform: scale(1.055);
     box-shadow: 1px 0px 4px 1px rgba(123, 152, 174, 0.4);
     color: rgb(60, 101, 131);
     background-color: rgba(142, 189, 225, 0.55);
+    font-size: larger;
     z-index: 10;
   }
   cursor: pointer;
