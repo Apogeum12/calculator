@@ -12,6 +12,8 @@ import android.graphics.Bitmap
 import androidx.webkit.WebViewAssetLoader
 
 class RustWebViewClient(context: Context): WebViewClient() {
+    private val interceptedState = mutableMapOf<String, Boolean>()
+
     private val assetLoader = WebViewAssetLoader.Builder()
         .setDomain(assetLoaderDomain())
         .addPathHandler("/", WebViewAssetLoader.AssetsPathHandler(context))
@@ -24,7 +26,9 @@ class RustWebViewClient(context: Context): WebViewClient() {
         return if (withAssetLoader()) {
             assetLoader.shouldInterceptRequest(request.url)
         } else {
-            handleRequest(request)
+            val response = handleRequest(request, (view as RustWebView).isDocumentStartScriptEnabled)
+            interceptedState[request.url.toString()] = response != null
+            return response
         }
     }
 
@@ -35,11 +39,17 @@ class RustWebViewClient(context: Context): WebViewClient() {
         return shouldOverride(request.url.toString())
     }
 
-    override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?): Unit {
+    override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
+        if (interceptedState[url] == false) {
+            val webView = view as RustWebView
+            for (script in webView.initScripts) {
+                view.evaluateJavascript(script, null)
+            }
+        }
         return onPageLoading(url)
     }
 
-    override fun onPageFinished(view: WebView, url: String): Unit {
+    override fun onPageFinished(view: WebView, url: String) {
         return onPageLoaded(url)
     }
 
@@ -52,7 +62,7 @@ class RustWebViewClient(context: Context): WebViewClient() {
 
     private external fun assetLoaderDomain(): String
     private external fun withAssetLoader(): Boolean
-    private external fun handleRequest(request: WebResourceRequest): WebResourceResponse?
+    private external fun handleRequest(request: WebResourceRequest, isDocumentStartScriptEnabled: Boolean): WebResourceResponse?
     private external fun shouldOverride(url: String): Boolean
     private external fun onPageLoading(url: String)
     private external fun onPageLoaded(url: String)

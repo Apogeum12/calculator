@@ -12,7 +12,10 @@
   "tauri": {
     "bundle": {
       "active": true,
-      "targets": ["deb"],
+      "android": {
+        "minSdkVersion": 24
+      },
+      "targets": "all",
       "identifier": "com.sebluc.dev",
       "icon": [
         "icons/32x32.png",

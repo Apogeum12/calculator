@@ -8,11 +8,17 @@
 
 package com.sebluc.calculator
 
+import android.annotation.SuppressLint
 import android.webkit.*
 import android.content.Context
+import androidx.webkit.WebViewCompat
+import androidx.webkit.WebViewFeature
 import kotlin.collections.Map
 
-class RustWebView(context: Context): WebView(context) {
+@SuppressLint("RestrictedApi")
+class RustWebView(context: Context, val initScripts: Array<String>): WebView(context) {
+    val isDocumentStartScriptEnabled: Boolean
+  
     init {
         settings.javaScriptEnabled = true
         settings.domStorageEnabled = true
@@ -20,6 +26,16 @@ class RustWebView(context: Context): WebView(context) {
         settings.databaseEnabled = true
         settings.mediaPlaybackRequiresUserGesture = false
         settings.javaScriptCanOpenWindowsAutomatically = true
+
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
+            isDocumentStartScriptEnabled = true
+            for (script in initScripts) {
+                WebViewCompat.addDocumentStartJavaScript(this, script, setOf("*"));
+            }
+        } else {
+          isDocumentStartScriptEnabled = false
+        }
+
         this.settings.mixedContentMode = android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
     }
 
@@ -53,6 +69,14 @@ class RustWebView(context: Context): WebView(context) {
         }
     }
 
+    fun evalScript(id: Int, script: String) {
+        post {
+            super.evaluateJavascript(script) { result ->
+                onEval(id, result)
+            }
+        }
+    }
+
     fun clearAllBrowsingData() {
         try {
             super.getContext().deleteDatabase("webviewCache.db")
@@ -76,6 +100,7 @@ class RustWebView(context: Context): WebView(context) {
     }
 
     private external fun shouldOverride(url: String): Boolean
+    private external fun onEval(id: Int, result: String)
 
     
 }

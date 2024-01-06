@@ -6,10 +6,10 @@ plugins {
 
 android {
     compileSdk = 33
-    namespace = "com.tauri.calculatorxd"
+    namespace = "com.sebluc.calculator"
     defaultConfig {
         manifestPlaceholders["usesCleartextTraffic"] = "false"
-        applicationId = "com.tauri.calculatorxd"
+        applicationId = "com.sebluc.calculator"
         minSdk = 24
         targetSdk = 33
         versionCode = 1
