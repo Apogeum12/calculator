@@ -9,10 +9,9 @@ import { AppContainer, ApplicationBackground } from "./styles/App.styles";
 import { isDesktop } from "./helpers/function/systemInfo";
 
 //TODO!
-// 1) Clear code
-// 2) Run in android
-// 3) Prepare list things todo, translate or correction need
-// 4) Prepare new version and merge code
+// 1) Add sound and transition when click on button
+// 2) Styling Keyboard to beta version
+// 3) Styling displays to beta version
 
 function App() {
   // --- Get Display Size --- //
@@ -33,16 +32,18 @@ function App() {
     };
     setDisplaySize(size);
   });
-  // --- END: Get Display Size --- //
+  // ------------------------ //
 
-  // --- Is Desktop? --- //
+  // --- Detect Desktop --- //
   const [desktop, setDesktop] = createSignal<boolean>(false);
   onMount(async () => {
     setDesktop(await isDesktop());
   });
+  // ------------------------ //
 
   // --- Get Theme ---
   const [isDark, setIsDark] = createSignal<boolean>(getTheme());
+  // ------------------------ //
 
   //? --- Put data on display --- //
   const [dataPutOnDisplay, setDataPutOnDisplay] = createSignal<string>("");
