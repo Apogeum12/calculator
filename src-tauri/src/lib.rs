@@ -1,5 +1,3 @@
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-
 #[tauri::command]
 fn is_desktop() -> bool {
     #[cfg(any(target_os = "linux", target_os = "windows", target_os = "macos"))]
@@ -16,7 +14,7 @@ fn is_desktop() -> bool {
 use evalexpr::eval;
 #[tauri::command]
 fn processing_formula(formula: String) -> Option<String> {
-    println!("Send Data: {:?}", formula);
+    // println!("Send Data: {:?}", formula);
     match eval(&formula) {
         Ok(equal) => Some(equal.to_string()),
         Err(_) => None
