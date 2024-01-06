@@ -1,3 +1,3 @@
-package com.tauri.calculatorxd
+package com.sebluc.calculator
 
 class MainActivity : TauriActivity()

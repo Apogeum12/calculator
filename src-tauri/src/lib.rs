@@ -14,9 +14,13 @@ fn is_desktop() -> bool {
 use evalexpr::eval;
 #[tauri::command]
 fn processing_formula(formula: String) -> Option<String> {
-    // println!("Send Data: {:?}", formula);
     match eval(&formula) {
-        Ok(equal) => Some(equal.to_string()),
+        Ok(equal) => {
+            match equal.as_number() {
+                Ok(cos) => Some(cos.to_string()),
+                Err(_) => None
+            }
+        },
         Err(_) => None
 
     }
