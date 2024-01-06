@@ -1,6 +1,6 @@
 {
   "name": "calculator",
-  "version": "0.0.2",
+  "version": "0.8.1-alpha.1",
   "description": "",
   "type": "module",
   "scripts": {
@@ -12,18 +12,18 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@suid/material": "^0.15.1",
-    "@tauri-apps/api": "2.0.0-alpha.12",
-    "@tauri-apps/plugin-shell": "2.0.0-alpha.4",
-    "solid-icons": "^1.1.0",
-    "solid-js": "^1.7.8",
-    "solid-styled-components": "^0.28.5"
+    "@suid/material": "0.15.1",
+    "@tauri-apps/api": "2.0.0-alpha.13",
+    "@tauri-apps/plugin-shell": "2.0.0-alpha.5",
+    "solid-icons": "1.1.0",
+    "solid-js": "1.8.8",
+    "solid-styled-components": "0.28.5"
   },
   "devDependencies": {
-    "typescript": "^5.0.2",
-    "vite": "^4.4.4",
-    "vite-plugin-solid": "^2.7.0",
-    "@tauri-apps/cli": "2.0.0-alpha.18",
-    "internal-ip": "^7.0.0"
+    "typescript": "5.3.3",
+    "vite": "5.0.11",
+    "vite-plugin-solid": "2.8.0",
+    "@tauri-apps/cli": "2.0.0-alpha.20",
+    "internal-ip": "8.0.0"
   }
 }
