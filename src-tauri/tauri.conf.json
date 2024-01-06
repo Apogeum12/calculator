@@ -15,7 +15,10 @@
       "android": {
         "minSdkVersion": 24
       },
-      "targets": "all",
+      "targets": ["deb", "appimage"],
+      "copyright": "MIT",
+      "shortDescription": "Simple Calculator in Tauri for testing the current status of the framework.",
+      "longDescription": "Calculator in Tauri is built in solid.js and Bun. It uses styled-components and Material UI, and it also use the library \"evalexpr\" to calculate formulas.",
       "identifier": "com.sebluc.dev",
       "icon": [
         "icons/32x32.png",
