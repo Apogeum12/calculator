@@ -6,7 +6,7 @@
 
 ## Description
 
-Calculator is a cross-platform application created using Tauri technology with a backend in Rust and a frontend in Solid.js, using Vite. The project provides comprehensive solutions for both desktop (Windows, MacOS, Linux) and mobile users (Android, iOS). It is a simple application serving as a base for working on more complex applications with example configurations needed for correct compilation on a given platform. It is also a project that serves as my current summary of skills as a developer.
+Calculator is a cross-platform application created using Tauri technology with a backend in Rust and a frontend in Solid.js, using Vite. The project provides comprehensive solutions for both desktop (Windows, MacOS, Linux) and mobile users (Android, iOS). It is a simple application serving as a base for working on more complex applications with example configurations and instruction needed for correct compilation on a given platform.
 
 ## Features
 
