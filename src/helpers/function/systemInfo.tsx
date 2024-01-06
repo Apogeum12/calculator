@@ -1,4 +1,4 @@
-import { invoke } from "@tauri-apps/api/primitives";
+import { invoke } from "@tauri-apps/api/core";
 
 export const isDesktop = async (): Promise<boolean> => {
   try {

@@ -16,14 +16,14 @@
     "@tauri-apps/api": "2.0.0-alpha.13",
     "@tauri-apps/plugin-shell": "2.0.0-alpha.5",
     "solid-icons": "1.1.0",
-    "solid-js": "1.8.8",
+    "solid-js": "^1.7.8",
     "solid-styled-components": "0.28.5"
   },
   "devDependencies": {
-    "typescript": "5.3.3",
-    "vite": "5.0.11",
-    "vite-plugin-solid": "2.8.0",
+    "typescript": "*5.0.2",
+    "vite": "^5.0.0",
+    "vite-plugin-solid": "^2.8.0",
     "@tauri-apps/cli": "2.0.0-alpha.20",
-    "internal-ip": "8.0.0"
+    "internal-ip": "*7.0.0"
   }
 }
