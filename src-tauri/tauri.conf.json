@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "calculator",
-    "version": "0.8.1-alpha.1"
+    "version": "0.8.1"
   },
   "tauri": {
     "bundle": {
@@ -15,7 +15,10 @@
       "android": {
         "minSdkVersion": 24
       },
-      "targets": ["deb", "appimage"],
+      "targets": [
+        "dmg",
+        "app"
+      ],
       "copyright": "MIT",
       "shortDescription": "Simple Calculator in Tauri for testing the current status of the framework.",
       "longDescription": "Calculator in Tauri is built in solid.js and Bun. It uses styled-components and Material UI, and it also use the library \"evalexpr\" to calculate formulas.",
@@ -26,7 +29,14 @@
         "icons/128x128@2x.png",
         "icons/icon.icns",
         "icons/icon.ico"
-      ]
+      ],
+      "macOS": {
+        "minimumSystemVersion": "10.13",
+        "license": "MIT"
+      },
+      "iOS": {
+        "developmentTeam": "Sebastian Luc developer"
+      }
     },
     "security": {
       "csp": null
@@ -42,7 +52,7 @@
         "height": 620,
         "maxHeight": 950,
         "minHeight": 590,
-        "transparent": true,
+        "transparent": false,
         "decorations": false
       }
     ]
