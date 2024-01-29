@@ -68,6 +68,16 @@ export const DisplayDataContainer = styled.div<DisplayDataProps>`
   height: ${(props) => (props.desktop ? "85%" : "95%")};
   background-color: rgba(139, 181, 253, 0.1);
   filter: drop-shadow(1px 2px 1px rgba(4, 47, 125, 0.1)) invert(10%);
+
+  &.copyResultToFormula {
+    &:hover {
+      background-color: rgba(194, 193, 192, 0.25);
+    }
+    &:active {
+      background-color: rgba(167, 167, 167, 0.45);
+    }
+    cursor: pointer;
+  }
 `;
 export const DisplayFormulaCont = styled.div`
   width: 100%;

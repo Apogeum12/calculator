@@ -61,6 +61,7 @@ function App() {
         <Display
           processingData={processingData}
           setProcessingData={setProcessingData}
+          setDataPutOnDisplay={setDataPutOnDisplay}
           setIsDark={setIsDark}
           desktop={desktop()}
         />

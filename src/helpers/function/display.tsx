@@ -47,7 +47,7 @@ export const switchToDots = (val: string) => {
 //! TODO
 export const preProcessingFormula = (val: string) => {
   const cleanningRegex = new RegExp(
-    /%|√|sin\d+(\.\d+)?|tan\d+(\.\d+)?|\/|\*|[0-9]|-|\+|\.|\,/,
+    /%|√|sin\d+(\.\d+)?|tan\d+(\.\d+)?|\/|\*|[0-9]|-|\+|\.|\,|\(|\)|\s+/,
     "gim"
   );
   return val.replace(cleanningRegex, "").length > 0;
@@ -55,9 +55,9 @@ export const preProcessingFormula = (val: string) => {
 
 export const parseFunctionForRust = (val: string) => {
   // --- Find and replace Int number to float in '/' operation
-  const findDivision = new RegExp(/(\d+)\/(\d+)/, "g");
+  const findDivision = new RegExp(/(\d+)\/(\d+\.?\d*)/, "gm");
   const replaceFloat = (_match: any, num1: any, num2: any) => {
-    return `${num1}/${parseFloat(num2).toFixed(1)}`;
+    return `${parseInt(num1)}.0/${num2}`;
   };
   let new_val = val.replace(findDivision, replaceFloat);
 

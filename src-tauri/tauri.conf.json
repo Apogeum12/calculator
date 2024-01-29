@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "calculator",
-    "version": "0.8.1-alpha.1"
+    "version": "0.8.1-alpha.2"
   },
   "tauri": {
     "bundle": {
@@ -49,7 +49,7 @@
   },
   "plugins": {
     "shell": {
-      "open": true
+      "open": false
     }
   }
 }

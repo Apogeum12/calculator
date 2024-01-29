@@ -34,6 +34,7 @@ import {
 interface DisplayProps {
   processingData: Accessor<string>;
   setProcessingData: Setter<string>;
+  setDataPutOnDisplay: Setter<string>;
   setIsDark: Setter<boolean>;
   desktop: boolean;
 }
@@ -41,7 +42,20 @@ export const Display = (props: DisplayProps) => {
   const [resultData, setResultData] = createSignal<string>("");
   const [formulaError, setFormulaError] = createSignal<boolean>(false);
 
+  // TODO! Error msg handler to Dialog ---
+
   createEffect(async () => {
+    try {
+      const getDisplay = document.querySelector("#DisplayDataCont");
+      if (getDisplay) {
+        if (resultData().length > 0) {
+          getDisplay.classList.add("copyResultToFormula");
+        } else getDisplay.classList.remove("copyResultToFormula");
+      }
+    } catch (err) {
+      setFormulaError(true);
+    }
+
     try {
       let data = props.processingData();
 
@@ -81,6 +95,12 @@ export const Display = (props: DisplayProps) => {
     }
   });
 
+  const handleTouchResultCont = () => {
+    if (resultData().length > 0 && resultData() !== "0") {
+      props.setDataPutOnDisplay(resultData().slice(0, 10));
+    }
+  };
+
   return (
     <>
       <DisplayContainer desktop={props.desktop}>
@@ -102,7 +122,12 @@ export const Display = (props: DisplayProps) => {
             </DisplayControlerButtons>
           </DisplayControlerContainer>
         </Show>
-        <DisplayDataContainer desktop={props.desktop}>
+        <DisplayDataContainer
+          desktop={props.desktop}
+          class="ResultContainer"
+          onClick={handleTouchResultCont}
+          id="DisplayDataCont"
+        >
           <DisplayFormulaCont>
             <DisplayFormula>
               <h4>{props.processingData()}</h4>

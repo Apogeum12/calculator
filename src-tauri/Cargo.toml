@@ -1,6 +1,6 @@
 [package]
 name = "calculator"
-version = "0.8.1-alpha.1"
+version = "0.8.1-alpha.2"
 description = "Tauri Calculator is an app for all platforms; it's a template to test the current status of Tauri projects."
 authors = ["Sebastian Luc <ninsebastianluc@gmail.com>"]
 license = "MIT"
